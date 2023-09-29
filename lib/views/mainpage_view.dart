@@ -25,6 +25,7 @@ class Mainpage extends ConsumerWidget {
 
   Widget _UIbuild() {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: Container(
         height: _deviceHeight,
@@ -68,7 +69,7 @@ class Mainpage extends ConsumerWidget {
       width: _deviceWidth! * 0.88,
       child: Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end ,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _topbarWidget(),
@@ -199,7 +200,11 @@ class Mainpage extends ConsumerWidget {
             ),
             child: GestureDetector(
               onTap: () {},
-              child: MovieTile(movie: _movies[_count], height: _deviceHeight! * 0.20, width: _deviceWidth! * 0.85 ,)
+              child: MovieTile(
+                movie: _movies[_count],
+                height: _deviceHeight! * 0.20,
+                width: _deviceWidth! * 0.85,
+              ),
             ),
           );
         },
