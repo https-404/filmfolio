@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:filmfolio/model/movie_data.dart';
 import 'package:filmfolio/res/theme/theme.dart';
+import 'package:filmfolio/widgets/movie_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
@@ -70,6 +72,11 @@ class Mainpage extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _topbarWidget(),
+          Container(
+            height: _deviceHeight! * 0.83,
+            padding: EdgeInsets.symmetric(vertical: _deviceHeight! * 0.01),
+            child: _movieListViewWidget(),
+          )
         ],
       ),
     );
@@ -164,5 +171,57 @@ class Mainpage extends ConsumerWidget {
         )
       ],
     );
+  }
+
+  Widget? _movieListViewWidget() {
+    final List<Movie> _movies = [];
+
+    for (var i = 0; i < 20; i++) {
+      _movies.add(Movie(
+          name: name,
+          language: language,
+          isAdult: isAdult,
+          description: description,
+          posterPath: posterPath,
+          backdropPath: backdropPath,
+          rating: rating,
+          releaseDate: releaseDate));
+    }
+
+    if (_movies.length != 0) {
+      return ListView.builder(
+        itemCount: _movies.length,
+        itemBuilder: (BuildContext _context, int _count) {
+          return Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: _deviceHeight! * 0.01,
+              horizontal: 0,
+            ),
+            child: GestureDetector(
+              onTap: () {},
+              child: MovieTile(movie: _movies[_count], height: _deviceHeight! * 0.20, width: _deviceWidth! * 0.85 ,)
+            ),
+          );
+        },
+      );
+    } else {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            ),
+          ),
+          Text(
+            "Check Your Internet Connection!",
+            style: TextStyle(
+                color: Colors.white, fontSize: 25, fontWeight: FontWeight.w400),
+          )
+        ],
+      );
+    }
   }
 }
