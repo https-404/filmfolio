@@ -1,6 +1,12 @@
 # filmfolio
 
-A new Flutter project.
+A Project based on RESTfull API structures to learn BASIC CRUD Operation.
+
+Dependency Injection: 
+    GetIT
+
+Thanks to THE MOVIE DATABASE for providing RESTfull API
+
 
 ## Getting Started
 
