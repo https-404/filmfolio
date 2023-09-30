@@ -1,30 +1,38 @@
-import 'package:filmfolio/res/Routes/routeName.dart';
-import 'package:filmfolio/res/Routes/routing.dart';
-import 'package:filmfolio/res/theme/theme.dart';
+//Packages
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../views/SplashScreen.dart';
 
+//Pages
+import './pages/splash_page.dart';
+import './pages/main_page.dart';
 
 void main() {
   runApp(
-
-    SplashScreen(
-        key: UniqueKey(),
-        onInitializationComplete: () => runApp(ProviderScope(child: MyApp()))),
+    SplashPage(
+      key: UniqueKey(),
+      onInitializationComplete: () => runApp(
+        ProviderScope(
+          child: MyApp(),
+        ),
+      ),
+    ),
   );
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    // TODO: implement build
     return MaterialApp(
-    debugShowCheckedModeBanner: false,
-      title: "FilmFolio",
-      initialRoute: RouteName.mainpage,
-      theme: Apptheme.theme,
-      routes: routes,
+      debugShowCheckedModeBanner: false,
+      title: 'Filmfolio',
+      initialRoute: 'home',
+      routes: {
+        'home': (BuildContext _context) => MainPage(),
+      },
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
     );
   }
 }

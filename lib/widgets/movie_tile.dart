@@ -1,62 +1,54 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
-import 'package:filmfolio/model/movie_data.dart';
+//Packages
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class MovieTile extends StatelessWidget {
-  final GetIt _getit = GetIt.instance;
-  final double height;
-  final double width;
-  final Movie movie;
+//Models
+import '../models/movie.dart';
 
-  MovieTile({required this.width, required this.height, required this.movie});
+class MovieTile extends StatelessWidget {
+  final GetIt _getIt = GetIt.instance;
+
+  final double? height;
+  final double? width;
+  final Movie? movie;
+
+  MovieTile({this.movie, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _moviePosterWidget(movie.posterURL()),
+        children: [
+          _moviePosterWidget(movie!.posterURL()),
           _movieInfoWidget(),
         ],
       ),
     );
   }
 
-  Widget _moviePosterWidget(String? _imageURL) {
-    return Container(
-      height: height,
-      width: width * 0.35,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-        image: NetworkImage(_imageURL!),
-      )),
-    );
-  }
-
   Widget _movieInfoWidget() {
     return Container(
       height: height,
-      width: width * 0.66,
+      width: width! * 0.67,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: [
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
+            children: [
               Container(
-                width: width * 0.56,
+                width: width! * 0.56,
                 child: Text(
-                  movie.name,
+                  movie!.name!,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       color: Colors.white,
@@ -65,28 +57,44 @@ class MovieTile extends StatelessWidget {
                 ),
               ),
               Text(
-                movie.rating.toString(),
-                style: TextStyle(color: Colors.white, fontSize: 22),
+                movie!.rating.toString(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ],
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(0, height * 0.02, 0, 0),
+            padding: EdgeInsets.fromLTRB(0, height! * 0.02, 0, 0),
             child: Text(
-              '${movie.language.toUpperCase()} | R : ${movie.isAdult} | ${movie.releaseDate} ',
-              style: TextStyle(color: Colors.white, fontSize: 14),
+              '${movie!.language!.toUpperCase()} | R: ${movie!.isAdult} | ${movie!.releaseDate}',
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(0, height * 0.07, 0, 0),
+            padding: EdgeInsets.fromLTRB(0, height! * 0.07, 0, 0),
             child: Text(
-              movie.description,
-              maxLines: 10,
+              movie!.description!,
+              maxLines: 9,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(color: Colors.white, fontSize: 10),
+              style: TextStyle(color: Colors.white70, fontSize: 9),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _moviePosterWidget(String _imageUrl) {
+    return Container(
+      height: height,
+      width: width! * 0.35,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(_imageUrl),
+        ),
       ),
     );
   }

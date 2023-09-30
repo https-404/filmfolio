@@ -11,10 +11,15 @@ import 'package:get_it/get_it.dart';
 import 'package:filmfolio/model/Search_Category.dart';
 
 //controller state provider
-final mainPageDataController =
-    StateNotifierProvider<MainPageDataController, dynamic>((ref) {
+final mainPageDataControllerProvider =
+    StateNotifierProvider<MainPageDataController, MainPageData>((ref) {
+
   return MainPageDataController();
 });
+
+ // Provider<MainPageDataController>((ref) {
+ //   return MainPageDataController();
+ // });
 
 class Mainpage extends ConsumerWidget {
   double? _deviceHeight;
@@ -25,10 +30,13 @@ class Mainpage extends ConsumerWidget {
   TextEditingController? _searchtextcontroller;
 
   @override
-  Widget build(BuildContext context, WidgetRef watch) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // TODO: implement build
     _deviceWidth = MediaQuery.of(context).size.width;
     _deviceHeight = MediaQuery.of(context).size.height;
+
+    _mainPageDataController = ref.watch(mainPageDataControllerProvider.notifier);
+    _mainPageData = ref.watch(mainPageDataControllerProvider);
     _searchtextcontroller = TextEditingController();
 
     return _UIbuild();
@@ -87,7 +95,7 @@ class Mainpage extends ConsumerWidget {
           Container(
             height: _deviceHeight! * 0.83,
             padding: EdgeInsets.symmetric(vertical: _deviceHeight! * 0.01),
-            child: _movieListViewWidget(),
+            child: _moviesListViewWidget(),
           )
         ],
       ),
@@ -185,59 +193,38 @@ class Mainpage extends ConsumerWidget {
     );
   }
 
-  Widget? _movieListViewWidget() {
-    final List<Movie> _movies = [];
+  Widget _moviesListViewWidget() {
+    final List<Movie>? _movies = _mainPageData?.movie;
 
-    for (var i = 0; i < 20; i++) {
-      _movies.add(Movie(
-          name: name,
-          language: language,
-          isAdult: isAdult,
-          description: description,
-          posterPath: posterPath,
-          backdropPath: backdropPath,
-          rating: rating,
-          releaseDate: releaseDate));
+    if (_movies?.isEmpty ?? true) {
+      return Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.white,
+        ),
+      );
     }
 
-    if (_movies.length != 0) {
-      return ListView.builder(
-        itemCount: _movies.length,
-        itemBuilder: (BuildContext _context, int _count) {
-          return Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: _deviceHeight! * 0.01,
-              horizontal: 0,
-            ),
-            child: GestureDetector(
-              onTap: () {},
-              child: MovieTile(
-                movie: _movies[_count],
-                height: _deviceHeight! * 0.20,
-                width: _deviceWidth! * 0.85,
-              ),
-            ),
-          );
-        },
-      );
-    } else {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.white,
+    return ListView.builder(
+      itemCount: _movies!.length,
+      itemBuilder: (BuildContext _context, int _count) {
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: _deviceHeight! * 0.01,
+            horizontal: 0,
+          ),
+          child: GestureDetector(
+            onTap: () {
+              // Handle item tap here
+            },
+            child: MovieTile(
+              movie: _movies[_count],
+              height: _deviceHeight! * 0.20,
+              width: _deviceWidth! * 0.85,
             ),
           ),
-          Text(
-            "Check Your Internet Connection!",
-            style: TextStyle(
-                color: Colors.white, fontSize: 25, fontWeight: FontWeight.w400),
-          )
-        ],
-      );
-    }
+        );
+      },
+    );
   }
+
 }

@@ -22,7 +22,7 @@ class MainPageData {
         searchText = '';
 
   MainPageData copyWith(
-      List<Movie> movie, int page, String searchCategory, String searchtext) {
+      {List<Movie>? movie, int? page, String? searchCategory, String? searchtext}) {
     return MainPageData(
       movie: movie ?? this.movie,
       page: page ?? this.page,
