@@ -1,8 +1,10 @@
 
 import 'package:dio/dio.dart';
-import 'package:filmfolio/model/movie_data.dart';
-import 'package:filmfolio/service/httpService.dart';
+
 import 'package:get_it/get_it.dart';
+
+import '../model/movie_data.dart';
+import 'httpService.dart';
 
 class MovieService {
   final GetIt getIt = GetIt.instance;
