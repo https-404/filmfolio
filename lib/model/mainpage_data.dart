@@ -1,5 +1,6 @@
-import 'package:filmfolio/model/Search_Category.dart';
 
+
+import '../models/search_category.dart';
 import 'movie_data.dart';
 
 class MainPageData {
