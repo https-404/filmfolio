@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:filmfolio/controllers/mainpage_dataController.dart';
+import 'package:filmfolio/model/mainpage_data.dart';
 import 'package:filmfolio/model/movie_data.dart';
 import 'package:filmfolio/res/theme/theme.dart';
 import 'package:filmfolio/widgets/movie_tile.dart';
@@ -8,9 +10,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 import 'package:filmfolio/model/Search_Category.dart';
 
+//controller state provider
+final mainPageDataController =
+    StateNotifierProvider<MainPageDataController, dynamic>((ref) {
+  return MainPageDataController();
+});
+
 class Mainpage extends ConsumerWidget {
   double? _deviceHeight;
   double? _deviceWidth;
+  MainPageDataController? _mainPageDataController;
+  MainPageData? _mainPageData;
+
   TextEditingController? _searchtextcontroller;
 
   @override
@@ -69,7 +80,7 @@ class Mainpage extends ConsumerWidget {
       width: _deviceWidth! * 0.88,
       child: Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.end ,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _topbarWidget(),
