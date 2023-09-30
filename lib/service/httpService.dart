@@ -28,7 +28,7 @@ class HttpService {
         _query.addAll(query);
       }
       return await dio.get(_url, queryParameters: _query);
-    } on DioException catch (e) {
+    } catch (e) {
       print("Unable to perform Get Command");
       print("Request failed!");
       print("DioException Triggered : $e");

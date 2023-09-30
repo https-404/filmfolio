@@ -1,5 +1,7 @@
-import 'package:filmfolio/model/app_config.dart';
+
 import 'package:get_it/get_it.dart';
+
+import '../models/app_config.dart';
 
 class Movie {
   late final String name;
@@ -37,6 +39,6 @@ class Movie {
 
   String? posterURL() {
     final AppConfig _appConfig = GetIt.instance.get<AppConfig>();
-    return '${_appConfig.Base_img_URL}${this.posterPath}';
+    return '${_appConfig.BASE_IMAGE_API_URL}${this.posterPath}';
   }
 }
